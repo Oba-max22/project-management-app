@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Projects</title>
+</head>
+<body>
+    <h1>Projects</h1>
+
+    <a class="btn btn-primary" data-toggle="modal" data-target="#myModal" role="button">Create new project</a>
+    <br/>
+    <div class="card d-flex flex-row mb-3" th:each="p : ${projects}">
+        <div class=" card body m-2 p-2" th:text="${p.projectName}">default name</div>
+    </div>
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <div class="d-flex flex-column">
+                        <span class="frm-header">Sign Up</span>
+                        <span class="frm-spn1">It's quick and easy.</span>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form th:action="@{/create-project}" th:object="${project}" method="post">
+                        <input type="text" placeholder="Project Name" th:field="*{projectName}" class="form-control" required>
+                        <input type="submit" value="Submit" class="btn btn-primary btn-block mt-3">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

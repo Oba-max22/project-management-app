@@ -3,6 +3,7 @@ package com.sq018.projectmanagementapp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -18,4 +19,7 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private Set<Task> tasks;
+
+    @ManyToMany(mappedBy = "projects")
+    private Set<User> users = new HashSet<>();
 }

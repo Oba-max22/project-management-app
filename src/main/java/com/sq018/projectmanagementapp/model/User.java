@@ -2,7 +2,9 @@ package com.sq018.projectmanagementapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -29,23 +31,16 @@ public class User {
 
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "users_projects",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"))
-    Set<Project> userProjects;
-}
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_project",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "project_id"))
+//    Set<Project> projects = new HashSet<>();
 
-/*
-*
-* 1 - User
-* 2 - Project
-* 3 - Tasks [ 'Todo', 'In Progress', 'In Review' 'Done' ]
-* User > Projects > Tasks
-*
-* User oneToMany / ManyToMany Projects
-* Projects oneToMany Tasks
-*
-*
-* */
+    @ManyToMany(targetEntity = Project.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "project_user", joinColumns = {@JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "project_id", nullable = false)})
+    Set<Project> projects = new HashSet<>();
+
+}
